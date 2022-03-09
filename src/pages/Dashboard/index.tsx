@@ -1,11 +1,13 @@
 import React from 'react';
 
+import { Title } from './styles';
+
 /*
 React.FC = React Function Component
 */
 
 const Dashboard: React.FC = () => {
-    return <h1>Dashboard</h1>;
+    return <Title>Explore repositórios no GitHub</Title>;
 };
 
 export default Dashboard;
