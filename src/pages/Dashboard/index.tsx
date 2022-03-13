@@ -1,4 +1,4 @@
-import React, { useState, FormEvent } from 'react';
+import React, { useState, useEffect, FormEvent } from 'react';
 
 import { Title, Form, Repositories, Error } from './styles';
 
@@ -23,7 +23,25 @@ interface Repository {
 const Dashboard: React.FC = () => {
     const [newRepo, setNewRepo] = useState('');
     const [inputError, setInputError] = useState('');
-    const [repositories, setRepositories] = useState<Repository[]>([]);
+
+    const [repositories, setRepositories] = useState<Repository[]>(() => {
+        const storageRepositories = localStorage.getItem(
+            '@GithubExplorer:repositories',
+        );
+
+        if (storageRepositories) {
+            return JSON.parse(storageRepositories);
+        } else {
+            return [];
+        }
+    });
+
+    useEffect(() => {
+        localStorage.setItem(
+            '@GithubExplorer:repositories',
+            JSON.stringify(repositories),
+        );
+    }, [repositories]);
 
     async function handleAddRepository(
         event: FormEvent<HTMLFormElement>,
